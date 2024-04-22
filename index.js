@@ -1,6 +1,6 @@
-// TASK: import helper functions from utils
+// TASK: import helper functions from utils - done
 import {getTasks, createNewTask, patchTask, putTask, deleteTask} from './taskFunctions.js';
-// TASK: import initialData
+// TASK: import initialData - done
 import {initialData} from './initialData.js';
 
 /*************************************************************************************************************************************************
@@ -17,10 +17,49 @@ function initializeData() {
   }
 }
 
-// TASK: Get elements from the DOM
+// TASK: Get elements from the DOM - done
 const elements = {
+  // Navigation Sidebar elements
+  sideBar: document.querySelector('.side-bar'),
+  logo: document.getElementById('logo'),
+  boardsNavLinks: document.getElementById('boards-nav-links-div'),
+  toggleSwitch: document.getElementById('switch'),
+  hideSideBarBtn: document.getElementById('hide-side-bar-btn'),
+  showSideBarBtn: document.getElementById('show-side-bar-btn'),
 
-}
+  // Main Layout elements
+  layout: document.getElementById('layout'),
+  header: document.getElementById('header'),
+  headerBoardName: document.getElementById('header-board-name'),
+  addNewTaskBtn: document.getElementById('add-new-task-btn'),
+  editBoardBtn: document.getElementById('edit-board-btn'),
+  deleteBoardBtn: document.getElementById('deleteBoardBtn'),
+
+  // Task Columns elements
+  todoColumn: document.querySelector('[data-status="todo"]'),
+  doingColumn: document.querySelector('[data-status="doing"]'),
+  doneColumn: document.querySelector('[data-status="done"]'),
+
+  // New Task Modal elements
+  newTaskModalWindow: document.getElementById('new-task-modal-window'),
+  titleInput: document.getElementById('title-input'),
+  descInput: document.getElementById('desc-input'),
+  selectStatus: document.getElementById('select-status'),
+  createTaskBtn: document.getElementById('create-task-btn'),
+  cancelAddTaskBtn: document.getElementById('cancel-add-task-btn'),
+
+  // Edit Task Modal elements
+  editTaskModalWindow: document.querySelector('.edit-task-modal-window'),
+  editTaskTitleInput: document.getElementById('edit-task-title-input'),
+  editTaskDescInput: document.getElementById('edit-task-desc-input'),
+  editSelectStatus: document.getElementById('edit-select-status'),
+  saveTaskChangesBtn: document.getElementById('save-task-changes-btn'),
+  cancelEditBtn: document.getElementById('cancel-edit-btn'),
+  deleteTaskBtn: document.getElementById('delete-task-btn'),
+
+  // Filter Div
+  filterDiv: document.getElementById('filterDiv')
+};
 
 let activeBoard = ""
 

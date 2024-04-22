@@ -79,7 +79,7 @@ function fetchAndDisplayBoardsAndTasks() {
 }
 
 // Creates different boards in the DOM
-// TASK: Fix Bugs - done(added '.addEventListener and bracket for it)
+// TASK: Fix Bugs - done(added .addEventListener and bracket for it)
 function displayBoards(boards) {
   const boardsContainer = document.getElementById("boards-nav-links-div");
   boardsContainer.innerHTML = ''; // Clears the container
@@ -100,7 +100,7 @@ function displayBoards(boards) {
 }
 
 // Filters tasks corresponding to the board name and displays them on the DOM.
-// TASK: Fix Bugs
+// TASK: Fix Bugs - done(=== and .addEventListener added)
 function filterAndDisplayTasksByBoard(boardName) {
   const tasks = getTasks(); // Fetch tasks from a simulated local storage function
   const filteredTasks = tasks.filter(task => task.board = boardName);
@@ -142,20 +142,17 @@ function refreshTasksUI() {
 // Styles the active board by adding an active class
 // TASK: Fix Bugs
 function styleActiveBoard(boardName) {
-  document.querySelectorAll('.board-btn').foreach(btn => { 
-    
-    if(btn.textContent === boardName) {
-      btn.add('active') 
-    }
-    else {
-      btn.remove('active'); 
+  document.querySelectorAll('.board-btn').forEach(btn => { //forEach instead of foreach
+    if (btn.textContent === boardName) {
+      btn.classList.add('active'); 
+    } else {
+      btn.classList.remove('active'); // Used classList.add() and classList.remove() 
     }
   });
 }
 
-
 function addTaskToUI(task) {
-  const column = document.querySelector('.column-div[data-status="${task.status}"]'); 
+  const column = document.querySelector(`.column-div[data-status="${task.status}"]`); // ` not ' for template literal, as seen below
   if (!column) {
     console.error(`Column not found for status: ${task.status}`);
     return;
@@ -173,9 +170,10 @@ function addTaskToUI(task) {
   taskElement.className = 'task-div';
   taskElement.textContent = task.title; // Modify as needed
   taskElement.setAttribute('data-task-id', task.id);
-  
-  tasksContainer.appendChild(); 
+
+  tasksContainer.appendChild(taskElement); // Appended taskElement to tasksContainer
 }
+
 
 
 

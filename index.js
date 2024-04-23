@@ -116,15 +116,17 @@ function filterAndDisplayTasksByBoard(boardName) {
       taskElement.textContent = task.title;
       taskElement.setAttribute('data-task-id', task.id);
 
-      // Listen for a click event on each task and open a modal
+      // Add click event listener to the task element
       taskElement.addEventListener('click', () => { 
-        openEditTaskModal(task);
+        openEditTaskModal(task); // Open edit task modal when task is clicked
       });
 
       tasksContainer.appendChild(taskElement);
     });
   });
 }
+
+;
 
 function refreshTasksUI() {
   filterAndDisplayTasksByBoard(activeBoard);
@@ -203,7 +205,8 @@ function setupEventListeners() {
   // Save task changes event listener
   const saveChangesBtn = document.getElementById('save-task-changes-btn');
   saveChangesBtn.addEventListener('click', () => {
-    saveTaskChanges();
+    const taskId = document.querySelector('.task-div.selected').getAttribute('data-task-id');
+    saveTaskChanges(taskId);
   });
 
   // Delete task event listener
@@ -252,6 +255,7 @@ function toggleSidebar(show) {
   } else {
     sidebar.style.display = 'none';
   }
+  console.log(sidebar);
 }
 
 function toggleTheme() {
@@ -272,9 +276,6 @@ function toggleTheme() {
   }
 }
 
-// DOUBLE CHECK if task.id represents the ID of the task to delete
-// DOUBLE CHECK if patchTask function is available to update the task details
-
 function openEditTaskModal(task) {
   // Set task details in modal inputs
   elements.editTaskTitleInput.value = task.title;
@@ -283,9 +284,15 @@ function openEditTaskModal(task) {
 
   // Show the edit task modal
   toggleModal(true, elements.editTaskModalWindow);
+
+  // Pass the taskId to saveTaskChanges function
+  elements.saveTaskChangesBtn.addEventListener('click', () => {
+    saveTaskChanges(task.id); // Passing the taskId here
+  });
 }
 
-function saveTaskChanges() {
+
+function saveTaskChanges(taskId) {
   // Get new user inputs
   const updatedTitle = elements.editTaskTitleInput.value;
   const updatedDescription = elements.editTaskDescInput.value;
@@ -293,7 +300,7 @@ function saveTaskChanges() {
 
   // Create an object with the updated task details
   const updatedTask = {
-    id: taskId, // Double check where taskId comes from
+    id: taskId,
     title: updatedTitle,
     description: updatedDescription,
     status: updatedStatus

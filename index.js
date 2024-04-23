@@ -1,11 +1,7 @@
-// TASK: import helper functions from utils - done
-import {getTasks, createNewTask, patchTask, putTask, deleteTask} from './utils/taskFunctions.js';
-// TASK: import initialData - done
-import {initialData} from './initialData.js';
-
-/*************************************************************************************************************************************************
- * FIX BUGS!!!
- * **********************************************************************************************************************************************/
+// TASK: import helper functions from utils
+import { getTasks, createNewTask, patchTask, deleteTask } from './utils/taskFunctions.js';
+// TASK: import initialData
+import { initialData } from './initialData.js';
 
 // Function checks if local storage already has data, if not it loads initialData to localStorage
 function initializeData() {
@@ -17,7 +13,8 @@ function initializeData() {
   }
 }
 
-// TASK: Get elements from the DOM - done
+
+// TASK: Get elements from the DOM
 const elements = {
   // Navigation Sidebar elements
   sideBar: document.querySelector('.side-bar'),
@@ -64,7 +61,6 @@ const elements = {
 let activeBoard = "";
 
 // Extracts unique board names from tasks
-// TASK: FIX BUGS - done( changed ; to :)
 function fetchAndDisplayBoardsAndTasks() {
   const tasks = getTasks();
   const boards = [...new Set(tasks.map(task => task.board).filter(Boolean))];
@@ -79,7 +75,6 @@ function fetchAndDisplayBoardsAndTasks() {
 }
 
 // Creates different boards in the DOM
-// TASK: Fix Bugs - done(added .addEventListener and bracket for it)
 function displayBoards(boards) {
   const boardsContainer = document.getElementById("boards-nav-links-div");
   boardsContainer.innerHTML = ''; // Clears the container
@@ -99,12 +94,9 @@ function displayBoards(boards) {
 }
 
 // Filters tasks corresponding to the board name and displays them on the DOM.
-// TASK: Fix Bugs - done(=== and .addEventListener added)
 function filterAndDisplayTasksByBoard(boardName) {
   const tasks = getTasks(); // Fetch tasks from a simulated local storage function
   const filteredTasks = tasks.filter(task => task.board === boardName);
-
-  // Ensure the column titles are set outside of this function or correctly initialized before this function runs
 
   const columnDivs = [elements.todoColumn, elements.doingColumn, elements.doneColumn];
   columnDivs.forEach(column => {
@@ -139,7 +131,6 @@ function refreshTasksUI() {
 }
 
 // Styles the active board by adding an active class
-// TASK: Fix Bugs
 function styleActiveBoard(boardName) {
   document.querySelectorAll('.board-btn').forEach(btn => { //forEach instead of foreach
     if (btn.textContent === boardName) {

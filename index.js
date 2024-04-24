@@ -13,6 +13,7 @@ function initializeData() {
   }
 }
 
+initializeData();
 
 // TASK: Get elements from the DOM
 const elements = {
@@ -202,12 +203,16 @@ function setupEventListeners() {
     addTask(event);
   });
 
-  // Save task changes event listener
-  const saveChangesBtn = document.getElementById('save-task-changes-btn');
-  saveChangesBtn.addEventListener('click', () => {
-    const taskId = document.querySelector('.task-div.selected').getAttribute('data-task-id');
-    saveTaskChanges(taskId);
-  });
+ // Save task changes event listener
+const saveChangesBtn = document.getElementById('save-task-changes-btn');
+saveChangesBtn.addEventListener('click', function() {
+  // Get the task ID from the edit task modal window or its child element
+  const editTaskModal = document.querySelector('.edit-task-modal-window');
+  const taskId = editTaskModal.getAttribute('data-task-id'); // assuming the task ID is stored as a data attribute
+  saveTaskChanges(taskId);
+});
+
+
 
   // Delete task event listener
   const deleteTaskBtn = document.getElementById('delete-task-btn');
@@ -242,7 +247,7 @@ function addTask(event) {
   if (newTask) {
     addTaskToUI(newTask);
     toggleModal(false);
-    elements.filterDiv.style.display = 'none'; // Also hide the filter overlay
+    elements.filterDiv.style.display = 'none';
     event.target.reset();
     refreshTasksUI();
   }
@@ -252,29 +257,30 @@ function toggleSidebar(show) {
   const sidebar = document.querySelector('.side-bar');
   if (show) {
     sidebar.style.display = 'block';
+    svg.style.display = 'none';
   } else {
     sidebar.style.display = 'none';
+    svg.style.display = 'block';
   }
   console.log(sidebar);
 }
 
 function toggleTheme() {
   const body = document.body;
-  // Check if the body has a class indicating the current theme
   if (body.classList.contains('light-theme')) {
-    // If the current theme is light, switch to dark theme
     body.classList.remove('light-theme');
     body.classList.add('dark-theme');
-    // Save the theme preference in localStorage
+    
     localStorage.setItem('theme', 'dark');
   } else {
-    // If the current theme is dark, switch to light theme
     body.classList.remove('dark-theme');
     body.classList.add('light-theme');
-    // Save the theme preference in localStorage
+   
     localStorage.setItem('theme', 'light');
   }
 }
+
+// Inside openEditTaskModal function
 
 function openEditTaskModal(task) {
   // Set task details in modal inputs
@@ -285,12 +291,18 @@ function openEditTaskModal(task) {
   // Show the edit task modal
   toggleModal(true, elements.editTaskModalWindow);
 
+  // Remove any previous event listener before adding a new one
+  elements.saveTaskChangesBtn.removeEventListener('click', saveTaskChanges);
+  
   // Pass the taskId to saveTaskChanges function
   elements.saveTaskChangesBtn.addEventListener('click', () => {
-    saveTaskChanges(task.id); // Passing the taskId here
+    saveTaskChanges(task.id);
   });
 }
 
+
+
+// Inside saveTaskChanges function
 
 function saveTaskChanges(taskId) {
   // Get new user inputs
@@ -316,6 +328,71 @@ function saveTaskChanges(taskId) {
   refreshTasksUI();
 }
 
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Selecting the "done" column
+  const doneColumn = document.querySelector('.column-div[data-status="done"]');
+
+  // Function to add a task to the "done" column
+  function addTaskToDoneColumn(task) {
+    if (!doneColumn) {
+      console.error('Column not found for status: done');
+      return;
+    }
+
+    const taskElement = document.createElement('div');
+    taskElement.classList.add('task-div');
+    taskElement.textContent = task.title; // Modify as needed
+    taskElement.setAttribute('data-task-id', task.id);
+
+    doneColumn.appendChild(taskElement);
+  }
+
+  // Example task object
+  const task = {
+    id: 1,
+    title: 'Complete project',
+    description: 'Finish all tasks related to the project',
+    status: 'done' // Set the status to "done" to add it to the "done" column
+  };
+
+  // Call the function to add the task to the "done" column
+  addTaskToDoneColumn(task);
+});
+
+
+
+// Create an SVG element
+const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+svg.setAttribute("width", "19");
+svg.setAttribute("height", "19");
+
+// Create a text element inside the SVG for the eye emoji
+const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+text.setAttribute("x", "2");
+text.setAttribute("y", "15");
+text.setAttribute("font-size", "14");
+text.setAttribute("fill", "#828FA3");
+text.textContent = "👀";
+
+// Append the text element to the SVG
+svg.appendChild(text);
+
+// Get the layout container
+const layout = document.getElementById("layout");
+
+// Append the SVG to the layout container
+layout.appendChild(svg);
+
+// Add an event listener to the SVG to toggle the sidebar when clicked
+svg.addEventListener("click", function() {
+  toggleSidebar(true); // Open the sidebar when clicked
+  svg.style.display = "none";
+});
+
+
 /*************************************************************************************************************************************************/
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -324,7 +401,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function init() {
   setupEventListeners();
-  const showSidebar = localStorage.getItem('showSideBar') === 'true';
+  const showSidebar = localStorage.getItem('showSideBar') === 'false';
   toggleSidebar(showSidebar);
   const isLightTheme = localStorage.getItem('theme') === 'light';
   document.body.classList.toggle('light-theme', isLightTheme);

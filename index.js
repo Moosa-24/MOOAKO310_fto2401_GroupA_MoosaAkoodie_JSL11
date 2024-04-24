@@ -91,8 +91,22 @@ function displayBoards(boards) {
       styleActiveBoard(activeBoard);
     });
     boardsContainer.appendChild(boardElement);
+
+    // Check if columns exist, if not, create them
+    ['todo', 'doing', 'done'].forEach(status => {
+      if (!document.querySelector(`[data-status="${status}"]`)) {
+        const columnDiv = document.createElement("div");
+        columnDiv.setAttribute("data-status", status);
+        columnDiv.innerHTML = `<div class="column-head-div">
+                                  <span class="dot" id="${status}-dot"></span>
+                                  <h4 class="columnHeader">${status.toUpperCase()}</h4>
+                                </div>`;
+        boardsContainer.appendChild(columnDiv);
+      }
+    });
   });
 }
+
 
 // Filters tasks corresponding to the board name and displays them on the DOM.
 function filterAndDisplayTasksByBoard(boardName) {
@@ -217,10 +231,9 @@ saveChangesBtn.addEventListener('click', function() {
   // Delete task event listener
   const deleteTaskBtn = document.getElementById('delete-task-btn');
   deleteTaskBtn.addEventListener('click', () => {
-    deleteTask();
-
-    // After deleting the task, close the modal
+    deleteTask(taskId); // Add taskId or any identifier for the task to be deleted
     toggleModal(false, elements.editTaskModalWindow);
+    refreshTasksUI();
   });
 }
 
@@ -327,8 +340,6 @@ function saveTaskChanges(taskId) {
   // Refresh the UI to reflect the changes
   refreshTasksUI();
 }
-
-
 
 
 document.addEventListener('DOMContentLoaded', function() {

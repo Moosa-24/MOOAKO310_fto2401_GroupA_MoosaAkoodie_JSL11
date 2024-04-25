@@ -1,5 +1,28 @@
 ### [JSL11] Agile Board - Kanban Task Management App
 
+
+
+
+
+MY LOOM VIDEO PRESENTATIONS(5 min was too short to explain code AND display the website):
+
+https://www.loom.com/share/e62ce8e566fe40869f666684b1b4cea7?sid=7d0cc4f6-19a2-4972-a835-f73243871a6d
+
+
+https://www.loom.com/share/772fd779ae3c44ba93ca2a295a43d31f?sid=46b104ac-1b53-45d2-b5f0-600f2130b114
+
+
+
+
+
+
+
+
+
+
+
+NOTES GIVEN TO THE STUDENT:
+
 Welcome to the Agile Board project, the final project for the JSL course! In this portfolio piece project, you will be stepping into the shoes of a juniour developer tasked with bringing a Kanban Task Management App to life. You're not starting from scratch, though. In this project, you are tasked with tackling the provided user stories to both identify and fix bugs in the code, as well as to develop your own functions to extend the application's capabilities. Key assignments include importing utility functions, initializing data, and diving into debugging tasks such as setting up data correctly in local storage, dynamically displaying boards and tasks, and enhancing user interactions.
 
 Additionally, you will enhance the application by crafting code to meet specific functionalities outlined in the user stories, like managing task details and their lifecycle, toggling theme customization, and ensuring the persistence of data through local storage. This blend of debugging and creative coding invites you to apply your critical thinking and problem-solving skills in a hands-on manner, equipping you for the intricacies of real-world software development scenarios.
